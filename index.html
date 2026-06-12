@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sight Translation · Rutgers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --scarlet: #CC0033; --scarlet-dark: #990025; --scarlet-light: #FAEAED; --scarlet-text: #7A001E;
+      --gray: #5F6A72; --gray-light: #F0F1F2; --gray-text: #3A4248;
+      --bg: #ffffff; --bg-secondary: #F7F7F6;
+      --text-primary: #1a1a18; --text-secondary: #5F6A72; --text-tertiary: #8A959C;
+      --border: rgba(0,0,0,0.10); --border-md: rgba(0,0,0,0.20);
+      --radius-md: 8px; --radius-lg: 12px;
+      --green: #2D6A11; --green-light: #EAF3DE; --green-text: #1B4A09;
+      --amber: #B07A10; --amber-light: #FDF3DC; --amber-text: #7A5408;
+      --red-light: #FAEAED; --red-text: #7A001E;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-secondary: #252523;
+        --text-primary: #f0ede6; --text-secondary: #A8B2B8; --text-tertiary: #7A858C;
+        --border: rgba(255,255,255,0.10); --border-md: rgba(255,255,255,0.20);
+        --scarlet-light: #3D000F; --scarlet-text: #FF9AAF;
+        --green-light: #122608; --green-text: #A8D880;
+        --amber-light: #2E1F04; --amber-text: #F0C060;
+        --red-light: #3D000F; --red-text: #FF9AAF;
+      }
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; padding: 0; }
+    .container { max-width: 680px; margin: 0 auto; padding: 1.75rem 1.5rem 2.5rem; }
+    .page-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--scarlet-light); color: var(--scarlet-text); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; border: 0.5px solid rgba(204,0,51,0.2); }
+    h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .instr-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-left: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .instr-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .instr-card strong { color: var(--text-primary); font-weight: 500; }
+    .instr-card .note { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; font-style: italic; }
+
+    .text-id-banner { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
+    .text-id-banner i { color: var(--scarlet); font-size: 16px; flex-shrink: 0; }
+    .text-id-banner p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .text-id-banner strong { color: var(--text-primary); }
+    .text-id-code { font-family: monospace; font-size: 13px; font-weight: 600; color: var(--scarlet); background: var(--scarlet-light); padding: 2px 8px; border-radius: 4px; border: 0.5px solid rgba(204,0,51,0.2); }
+
+    .attempt-banner { border-radius: var(--radius-lg); padding: 0.875rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 12px; }
+    .attempt-banner.green { background: var(--green-light); border: 0.5px solid #6AAD2A; }
+    .attempt-banner.amber { background: var(--amber-light); border: 0.5px solid #D4A020; }
+    .attempt-banner.red { background: var(--red-light); border: 0.5px solid rgba(204,0,51,0.35); }
+    .attempt-banner i { font-size: 20px; flex-shrink: 0; }
+    .attempt-banner.green i { color: var(--green); }
+    .attempt-banner.amber i { color: var(--amber); }
+    .attempt-banner.red i { color: var(--scarlet); }
+    .attempt-text { flex: 1; }
+    .attempt-text strong { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
+    .attempt-banner.green .attempt-text { color: var(--green-text); }
+    .attempt-banner.amber .attempt-text { color: var(--amber-text); }
+    .attempt-banner.red .attempt-text { color: var(--red-text); }
+    .attempt-text span { font-size: 12px; }
+    .attempt-dots { display: flex; gap: 6px; flex-shrink: 0; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border-md); }
+    .dot.used { background: var(--green); }
+    .dot.last { background: var(--amber); }
+    .dot.done { background: var(--scarlet); }
+
+    .phase-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+    .phase-row span:first-child { font-size: 13px; color: var(--text-secondary); }
+    .pill { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+    .pill-prep { background: var(--amber-light); color: var(--amber-text); }
+    .pill-record { background: var(--scarlet-light); color: var(--scarlet-text); }
+    .pill-done { background: var(--green-light); color: var(--green-text); }
+
+    .timer-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .timer-display { font-size: 42px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+    .timer-display.done { color: var(--green); }
+    .timer-display.overdue { color: var(--scarlet); }
+    .timer-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: transparent; color: var(--text-primary); cursor: pointer; transition: background 0.15s, transform 0.1s; font-family: inherit; }
+    button:hover { background: var(--bg-secondary); }
+    button:active { transform: scale(0.97); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-scarlet { background: var(--scarlet); color: #fff; border-color: var(--scarlet); }
+    .btn-scarlet:hover { background: var(--scarlet-dark); }
+    .btn-green { background: var(--green); color: #fff; border-color: var(--green); }
+    .btn-green:hover { background: #1B4A09; }
+    .btn-danger { background: #991100; color: #fff; border-color: #991100; }
+    .btn-danger:hover { background: #660B00; }
+
+    .progress-wrap { width: 100%; height: 5px; background: var(--bg-secondary); border-radius: 3px; margin-bottom: 1.25rem; overflow: hidden; }
+    .progress-bar { height: 5px; border-radius: 3px; background: var(--scarlet); transition: width 1s linear, background 0.4s; }
+    .divider { height: 0.5px; background: var(--border); margin: 1.25rem 0; }
+
+    .text-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; position: relative; min-height: 200px; }
+    .text-card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
+    .text-topic { font-size: 12px; color: var(--scarlet-text); background: var(--scarlet-light); display: inline-block; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; font-weight: 500; border: 0.5px solid rgba(204,0,51,0.15); }
+    .text-body { font-size: 15px; color: var(--text-primary); line-height: 1.85; }
+    .text-body.blurred { filter: blur(6px); user-select: none; pointer-events: none; }
+    .lock-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius-lg); }
+    .lock-overlay span { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+
+    .recording-card { background: var(--bg); border: 0.5px solid var(--border); border-top: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: none; }
+    .recording-card.visible { display: block; }
+    .recording-card-title { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+    .recording-card-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.5; }
+
+    .recorder-ui { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .recorder-status { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-tertiary); flex-shrink: 0; }
+    .rec-dot.recording { background: var(--scarlet); animation: pulse 1s infinite; }
+    .rec-dot.done { background: var(--green); }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .rec-status-text { font-size: 13px; color: var(--text-secondary); }
+    .rec-timer { font-size: 22px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; margin-bottom: 1rem; }
+    .rec-waveform { height: 40px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-md); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; overflow: hidden; gap: 2px; padding: 0 8px; }
+    .wave-bar { width: 3px; border-radius: 2px; background: var(--scarlet); opacity: 0.2; height: 4px; transition: height 0.1s; }
+    .rec-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .audio-playback { margin-top: 1rem; display: none; }
+    .audio-playback.visible { display: block; }
+    .audio-label { font-size: 12px; color: var(--text-tertiary); margin-bottom: 6px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .audio-playback audio { width: 100%; border-radius: var(--radius-md); }
+
+    .submit-section { margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .submit-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
+    .submit-label strong { color: var(--text-primary); }
+
+    .attempt-log { margin-top: 1rem; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+    .attempt-log-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
+    .attempt-entry { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-secondary); padding: 6px 0; border-bottom: 0.5px solid var(--border); }
+    .attempt-entry:last-child { border-bottom: none; }
+    .attempt-entry i { font-size: 16px; }
+    .attempt-entry.complete i { color: var(--green); }
+    .attempt-entry.complete { color: var(--text-primary); }
+
+    .locked-card { background: var(--red-light); border: 0.5px solid rgba(204,0,51,0.3); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: none; }
+    .locked-card.visible { display: block; }
+    .locked-card p { font-size: 14px; color: var(--red-text); line-height: 1.6; }
+
+    .bottom-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .ru-footer { padding-top: 1rem; border-top: 0.5px solid var(--border); text-align: center; font-size: 12px; color: var(--text-tertiary); }
+    .ru-footer span { color: var(--scarlet); font-weight: 700; font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+<main class="container" role="main">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">Sight Translation Exercise — Body Parts in Healthcare</h2>
+
+  <div style="margin-bottom:1.5rem; margin-top:0.5rem;">
+    <div class="page-badge">Module · Body Parts in Healthcare</div>
+    <h1>Sight Translation Exercise</h1>
+    <p class="subtitle">Read the clinical text in English carefully, prepare your translation during the timer, then record your oral sight translation into Spanish.</p>
+  </div>
+
+  <div class="instr-card">
+    <p>Perform a <strong>sight translation</strong> of the text below. Take <strong>3 to 5 minutes</strong> to read and analyze the text. Pay close attention to anatomical vocabulary and note any unfamiliar terms before you begin recording. When the timer ends, scroll down to the Canvas Media Recorder to record your <strong>oral sight translation into Spanish</strong>.</p>
+    <p class="note">In a clinical setting, anatomical accuracy has direct consequences for the patient. Use your preparation time well.</p>
+  </div>
+
+  <div class="text-id-banner" id="text-id-banner">
+    <i class="ti ti-id" aria-hidden="true"></i>
+    <p>Your assigned text: <strong id="text-id-display">—</strong> &nbsp;·&nbsp; Please include this code when submitting so your instructor can follow along while grading.</p>
+  </div>
+
+  <div class="attempt-banner green" id="attempt-banner">
+    <i class="ti ti-microphone" aria-hidden="true"></i>
+    <div class="attempt-text">
+      <strong id="attempt-title">Attempt 1 of 2 available</strong>
+      <span id="attempt-subtitle">You have one main attempt and one additional attempt if needed.</span>
+    </div>
+    <div class="attempt-dots">
+      <div class="dot" id="dot1"></div>
+      <div class="dot" id="dot2"></div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <span>Phase:</span>
+    <span class="pill pill-prep" id="phase-label">Preparation</span>
+  </div>
+
+  <div class="timer-row">
+    <div>
+      <div class="timer-display" id="timer-display">5:00</div>
+      <div class="timer-label">Preparation time</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-scarlet" id="btn-start" onclick="startTimer()">
+        <i class="ti ti-player-play" aria-hidden="true"></i> Start preparation
+      </button>
+      <button id="btn-reset-timer" onclick="softReset()" style="display:none;">
+        <i class="ti ti-refresh" aria-hidden="true"></i> Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progress-bar" style="width:100%;"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="text-card">
+    <div class="text-card-label">Clinical text · English — Translate orally into Spanish</div>
+    <div class="text-topic" id="text-topic"></div>
+    <div class="text-body blurred" id="text-body"></div>
+    <div class="lock-overlay" id="lock-overlay">
+      <i class="ti ti-lock" style="font-size:26px; color: var(--text-tertiary);" aria-hidden="true"></i>
+      <span>Start the timer to reveal your text</span>
+    </div>
+  </div>
+
+  <div class="recording-card" id="recording-card">
+    <div class="recording-card-title" id="rec-card-title">Attempt 1 — Record your oral sight translation</div>
+    <div class="recording-card-sub">Your preparation time has ended. When you are ready, press the red button to begin recording your oral sight translation into Spanish from start to finish.</div>
+
+    <div class="recorder-ui">
+      <div class="recorder-status">
+        <div class="rec-dot" id="rec-dot"></div>
+        <span class="rec-status-text" id="rec-status-text">Ready to record</span>
+      </div>
+      <div class="rec-timer" id="rec-timer">0:00</div>
+      <div class="rec-waveform" id="rec-waveform"></div>
+      <div class="rec-controls">
+        <button class="btn-danger" id="btn-record" onclick="toggleRecording()">
+          <i class="ti ti-microphone" aria-hidden="true"></i> Start recording
+        </button>
+      </div>
+    </div>
+
+    <div class="audio-playback" id="audio-playback">
+      <div class="audio-label">Review your recording before submitting</div>
+      <audio id="audio-player" controls></audio>
+    </div>
+
+    <div class="submit-section" id="submit-section" style="display:none;">
+      <p class="submit-label">Your text code is <strong id="submit-code"></strong>. Download your recording and submit it to Canvas with this code in your submission comments so your instructor knows which text you received.</p>
+      <div class="btn-row">
+        <button class="btn-green" id="btn-download" onclick="downloadRecording()">
+          <i class="ti ti-download" aria-hidden="true"></i> Download recording
+        </button>
+        <button id="btn-retake" onclick="retakeAttempt()" style="display:none;">
+          <i class="ti ti-refresh" aria-hidden="true"></i> Use second attempt
+        </button>
+        <button class="btn-scarlet" id="btn-final-submit" onclick="finalSubmit()">
+          <i class="ti ti-circle-check" aria-hidden="true"></i> Mark as submitted
+        </button>
+      </div>
+    </div>
+
+    <div class="attempt-log">
+      <div class="attempt-log-label">Attempt log</div>
+      <div class="attempt-entry" id="log-1">
+        <i class="ti ti-circle" aria-hidden="true"></i>
+        <span>Attempt 1 — pending</span>
+      </div>
+      <div class="attempt-entry" id="log-2">
+        <i class="ti ti-circle" aria-hidden="true"></i>
+        <span>Attempt 2 (additional) — pending</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="locked-card" id="locked-card">
+    <p><strong>Both attempts have been submitted.</strong> No further recordings are available for this exercise. Make sure your final audio file has been uploaded to Canvas before closing this page.</p>
+  </div>
+
+  <div class="bottom-actions" id="bottom-actions">
+    <button id="btn-new" onclick="loadNewText()">
+      <i class="ti ti-refresh" aria-hidden="true"></i> New text
+    </button>
+  </div>
+
+  <div class="ru-footer"><span>R</span> Rutgers University · Medical Sight Translation Course</div>
+</main>
+
+<script>
+const TEXTS = [
+  { id: "BP-01", topic: "Headache and neck pain", text: "The patient is a 42-year-old woman who comes to the clinic with persistent pain in the back of her head, especially at the base of the skull. She says the pain spreads to her shoulders and upper back. During the physical exam, the doctor notices muscle tension in the neck and tenderness around the temples. The patient says the pain gets worse when she turns her head to the right. The doctor feels a tight muscle knot in the trapezius and the muscles of the left shoulder. The recommendation is to apply heat to the affected area, do neck stretching exercises, and take an anti-inflammatory as needed. If the pain continues or is accompanied by numbness in the arms or hands, she should return for a more detailed evaluation." },
+  { id: "BP-02", topic: "Abdominal pain", text: "The patient is a 55-year-old man with pain in the lower right area of the abdomen. The pain started near the navel and moved to the lower right side over the past few hours. When the doctor presses on that area, the patient feels tenderness in the lower right part of the belly and the stomach muscles feel rigid. The patient also reports nausea and loss of appetite. He does not have a high fever right now, but his temperature is slightly above normal. The doctor suspects a possible appendicitis and orders an urgent abdominal ultrasound. The patient must not eat or drink anything until further notice, and an intravenous line will be placed for fluids." },
+  { id: "BP-03", topic: "Knee injury", text: "The patient is a 28-year-old woman who arrived at the emergency room after falling during a sports activity. She has intense pain in her right knee, with visible swelling and difficulty bending and straightening the joint. The physical exam shows swelling around the kneecap and tenderness on the inner side of the knee, near the ligament. The patient says she heard a popping sound at the moment of the injury. An X-ray is ordered to rule out a fracture, and an MRI is requested to evaluate the ligaments and the cartilage cushion inside the knee. The knee is temporarily stabilized with a splint and the patient is told to keep the leg elevated to reduce swelling." },
+  { id: "BP-04", topic: "Chest pain", text: "The patient is a 62-year-old man who comes in with a feeling of pressure in his chest that started about two hours ago. He describes the pain as a heavy pressure in the center of his chest that extends to his left arm and jaw. He also reports difficulty breathing and excessive sweating. When the doctor listens to his heart, there are irregular sounds. His blood pressure is high and his heart rate is fast. An emergency electrocardiogram is done and a blood sample is taken to measure cardiac markers. The patient receives aspirin and oxygen while waiting for the results. The heart attack protocol is activated and the patient is prepared for a possible cardiac catheterization procedure." },
+  { id: "BP-05", topic: "Arm fracture", text: "The patient is a 9-year-old boy who was brought in by his mother after falling from a swing at the park. He has sharp pain in his right forearm, with a visible deformity between the wrist and the elbow. The arm is swollen and the boy cannot move his fingers without feeling intense pain. The exam shows tenderness when pressing on the larger bone of the forearm, and a fracture is suspected. The fingers have good color and the pulse at the wrist can be felt, which means blood circulation is not affected. An X-ray of the forearm and wrist is ordered. Depending on the type of fracture, the patient may need a cast or surgery." },
+  { id: "BP-06", topic: "Lower back pain", text: "The patient is a 48-year-old woman who works in an office and has had chronic pain in her lower back for several weeks with no improvement. She describes the pain as a constant discomfort that gets worse when she sits for long periods or bends forward. The pain does not spread to her legs and she does not have numbness in her feet, which is a good sign. The exam shows tight muscles along both sides of the spine and limited movement when bending the back forward. A series of X-rays of the lower spine is recommended. Treatment includes physical therapy, core strengthening exercises, local heat application, and an oral anti-inflammatory for ten days." },
+  { id: "BP-07", topic: "Foot ulcer", text: "The patient is a 70-year-old man with type 2 diabetes who comes in because he noticed a wound on the bottom of his left foot that has not healed in three weeks. He says he did not feel any pain because he has lost feeling in his feet, which is a common symptom of diabetic nerve damage. The exam shows an ulcer about two centimeters wide on the heel, with red edges and signs of infection. The pulse on the top of the foot is weak, which suggests poor blood circulation. Wound cultures are taken to identify the bacteria causing the infection. The patient is referred to the foot care and vascular surgery teams." },
+  { id: "BP-08", topic: "Head and neck exam", text: "During the routine physical exam, the doctor checks the structures of the head and neck. The scalp is examined for any lesions or irritation. The eyes show pink inner eyelids and pupils that react normally to light. The ears have clean ear canals with no buildup of wax. The nose shows no deviation of the wall between the nostrils and no blockage. In the mouth, the tonsils show no signs of inflammation and the tongue is in the center. The neck moves freely with no stiffness and no swollen lymph nodes felt under the jaw or along the sides of the neck. The thyroid gland does not feel enlarged." },
+  { id: "BP-09", topic: "Hip pain", text: "The patient is a 74-year-old woman with right hip pain that has been getting gradually worse over the past few months. She reports difficulty walking, especially going up stairs, and pain when lying on her right side. During the physical exam, turning the hip inward is limited and painful. The doctor feels tenderness over the bony point on the outer side of the hip. The patient also mentions that the pain occasionally spreads to the inner part of the thigh. An X-ray of the hip is ordered to evaluate the joint and rule out advanced joint degeneration or a fracture. The patient is advised to use a cane to reduce pressure on the affected joint while waiting for results." },
+  { id: "BP-10", topic: "Breathing difficulty", text: "The patient is a 45-year-old man with a history of asthma who comes to the emergency room with difficulty breathing that started this morning. He reports a feeling of tightness in the chest and a whistling sound when he breathes out. When the doctor listens to his lungs, there are wheezing sounds in both lung fields, more pronounced at the bottom of the lungs. His breathing rate is high and the oxygen level in his blood is 91 percent. A fast-acting bronchodilator is given through a breathing mask and extra oxygen is provided. The doctor explains that if there is no improvement in the next hour, the patient will be admitted to the hospital." }
+];
+
+let timerInterval=null, recInterval=null, waveInterval=null;
+let secondsLeft=300, timerStarted=false, currentIndex=-1, attemptsUsed=0;
+const MAX=2;
+let mediaRecorder=null, audioChunks=[], isRecording=false, recSeconds=0, audioBlob=null, currentTextId="";
+
+function fmt(s){const m=Math.floor(Math.abs(s)/60),sec=Math.abs(s)%60;return(s<0?"-":"")+m+":"+(sec<10?"0":"")+sec;}
+
+function setPhase(p){
+  const el=document.getElementById("phase-label");
+  if(p==="prep"){el.textContent="Preparation";el.className="pill pill-prep";}
+  else if(p==="record"){el.textContent="Recording";el.className="pill pill-record";}
+  else{el.textContent="Completed";el.className="pill pill-done";}
+}
+
+function updateAttemptBanner(){
+  const b=document.getElementById("attempt-banner"),t=document.getElementById("attempt-title"),s=document.getElementById("attempt-subtitle");
+  const d1=document.getElementById("dot1"),d2=document.getElementById("dot2");
+  if(attemptsUsed===0){b.className="attempt-banner green";t.textContent="Attempt 1 of 2 available";s.textContent="You have one main attempt and one additional attempt if needed.";d1.className="dot";d2.className="dot";}
+  else if(attemptsUsed===1){b.className="attempt-banner amber";t.textContent="Attempt 1 submitted — Additional attempt available";s.textContent="You have used your main attempt. One additional attempt remains. Use it carefully.";d1.className="dot used";d2.className="dot last";}
+  else{b.className="attempt-banner red";t.textContent="Both attempts submitted";s.textContent="You have used both available attempts for this exercise.";d1.className="dot done";d2.className="dot done";}
+}
+
+function revealText(){
+  document.getElementById("text-body").classList.remove("blurred");
+  document.getElementById("lock-overlay").style.display="none";
+}
+
+function startTimer(){
+  if(timerInterval||attemptsUsed>=MAX) return;
+  timerStarted=true;
+  document.getElementById("btn-start").style.display="none";
+  document.getElementById("btn-reset-timer").style.display="inline-flex";
+  document.getElementById("btn-new").style.display="none";
+  setPhase("prep");
+  revealText();
+  timerInterval=setInterval(()=>{
+    secondsLeft--;
+    const d=document.getElementById("timer-display");
+    d.textContent=fmt(secondsLeft);
+    const pct=Math.max(0,secondsLeft/300*100);
+    const bar=document.getElementById("progress-bar");
+    bar.style.width=pct+"%";
+    if(secondsLeft<=60&&secondsLeft>0) bar.style.background="#B07A10";
+    if(secondsLeft<=0){bar.style.width="0%";d.className="timer-display "+(secondsLeft<-10?"overdue":"done");if(secondsLeft===0){setPhase("record");showRecordingCard();}}
+  },1000);
+}
+
+function showRecordingCard(){
+  const card=document.getElementById("recording-card");
+  card.classList.add("visible");
+  const n=attemptsUsed+1;
+  document.getElementById("rec-card-title").textContent=`Attempt ${n} — Record your oral sight translation`;
+  buildWaveBars();
+}
+
+function buildWaveBars(){
+  const wf=document.getElementById("rec-waveform");wf.innerHTML="";
+  for(let i=0;i<40;i++){const b=document.createElement("div");b.className="wave-bar";b.id="wb"+i;wf.appendChild(b);}
+}
+
+async function toggleRecording(){
+  if(!isRecording){await startRecording();}else{stopRecording();}
+}
+
+async function startRecording(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    audioChunks=[];
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};
+    mediaRecorder.onstop=()=>{
+      audioBlob=new Blob(audioChunks,{type:"audio/webm"});
+      const url=URL.createObjectURL(audioBlob);
+      document.getElementById("audio-player").src=url;
+      document.getElementById("audio-playback").classList.add("visible");
+      const ss=document.getElementById("submit-section");
+      ss.style.display="block";
+      document.getElementById("submit-code").textContent=currentTextId;
+      if(attemptsUsed===0) document.getElementById("btn-retake").style.display="inline-flex";
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    mediaRecorder.start(100);
+    isRecording=true; recSeconds=0;
+    document.getElementById("btn-record").innerHTML='<i class="ti ti-player-stop" aria-hidden="true"></i> Stop recording';
+    document.getElementById("rec-dot").className="rec-dot recording";
+    document.getElementById("rec-status-text").textContent="Recording...";
+    recInterval=setInterval(()=>{recSeconds++;document.getElementById("rec-timer").textContent=fmt(recSeconds);},1000);
+    waveInterval=setInterval(()=>{for(let i=0;i<40;i++){const b=document.getElementById("wb"+i);if(b){b.style.height=(4+Math.random()*32)+"px";b.style.opacity="0.85";}}},80);
+  }catch(e){
+    document.getElementById("rec-status-text").textContent="Microphone access denied. Please check your browser permissions and try again.";
+  }
+}
+
+function stopRecording(){
+  if(mediaRecorder&&mediaRecorder.state!=="inactive")mediaRecorder.stop();
+  isRecording=false;
+  clearInterval(recInterval);clearInterval(waveInterval);
+  document.getElementById("btn-record").innerHTML='<i class="ti ti-microphone" aria-hidden="true"></i> Record again';
+  document.getElementById("rec-dot").className="rec-dot done";
+  document.getElementById("rec-status-text").textContent="Recording complete. Listen back before submitting.";
+  for(let i=0;i<40;i++){const b=document.getElementById("wb"+i);if(b){b.style.height="4px";b.style.opacity="0.2";}}
+}
+
+function downloadRecording(){
+  if(!audioBlob)return;
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(audioBlob);
+  a.download=`sight_translation_${currentTextId}_attempt${attemptsUsed+1}.webm`;
+  a.click();
+}
+
+function finalSubmit(){
+  attemptsUsed++;
+  const l1=document.getElementById("log-1"),l2=document.getElementById("log-2");
+  if(attemptsUsed===1){l1.className="attempt-entry complete";l1.innerHTML='<i class="ti ti-circle-check" aria-hidden="true"></i><span>Attempt 1 — submitted (Text '+currentTextId+')</span>';}
+  else{l2.className="attempt-entry complete";l2.innerHTML='<i class="ti ti-circle-check" aria-hidden="true"></i><span>Attempt 2 — submitted (Text '+currentTextId+')</span>';}
+  updateAttemptBanner();
+  if(attemptsUsed>=MAX){
+    document.getElementById("recording-card").classList.remove("visible");
+    document.getElementById("locked-card").classList.add("visible");
+    clearInterval(timerInterval);
+    setPhase("completado");
+    document.getElementById("btn-reset-timer").style.display="none";
+  } else {
+    document.getElementById("submit-section").style.display="none";
+    document.getElementById("audio-playback").classList.remove("visible");
+    document.getElementById("btn-retake").style.display="none";
+    document.getElementById("btn-record").innerHTML='<i class="ti ti-microphone" aria-hidden="true"></i> Start recording';
+    document.getElementById("rec-dot").className="rec-dot";
+    document.getElementById("rec-status-text").textContent="Ready to record";
+    document.getElementById("rec-timer").textContent="0:00";
+  }
+}
+
+function retakeAttempt(){
+  finalSubmit();
+  if(attemptsUsed<MAX){
+    document.getElementById("recording-card").classList.remove("visible");
+    softReset();
+  }
+}
+
+function softReset(){
+  clearInterval(timerInterval);timerInterval=null;secondsLeft=300;timerStarted=false;
+  document.getElementById("timer-display").textContent="5:00";
+  document.getElementById("timer-display").className="timer-display";
+  document.getElementById("progress-bar").style.width="100%";
+  document.getElementById("progress-bar").style.background="var(--scarlet)";
+  document.getElementById("btn-start").style.display="inline-flex";
+  document.getElementById("btn-reset-timer").style.display="none";
+  setPhase("prep");
+  document.getElementById("text-body").classList.add("blurred");
+  document.getElementById("lock-overlay").style.display="flex";
+  document.getElementById("recording-card").classList.remove("visible");
+  if(attemptsUsed<MAX) document.getElementById("btn-new").style.display="inline-flex";
+}
+
+function loadNewText(){
+  if(attemptsUsed>=MAX) return;
+  let n; do{n=Math.floor(Math.random()*TEXTS.length);}while(n===currentIndex&&TEXTS.length>1);
+  currentIndex=n;
+  const e=TEXTS[n];
+  currentTextId=e.id;
+  document.getElementById("text-topic").textContent=e.topic;
+  document.getElementById("text-body").textContent=e.text;
+  document.getElementById("text-id-display").innerHTML=`<span class="text-id-code">${e.id} — ${e.topic}</span>`;
+  softReset();
+}
+
+updateAttemptBanner();
+loadNewText();
+</script>
+</body>
+</html>
