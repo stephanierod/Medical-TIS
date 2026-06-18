@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sight Translation · Pediatrics & Pregnancy · Rutgers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --scarlet: #CC0033; --scarlet-dark: #990025; --scarlet-light: #FAEAED; --scarlet-text: #7A001E;
+      --bg: #ffffff; --bg-secondary: #F7F7F6;
+      --text-primary: #1a1a18; --text-secondary: #5F6A72; --text-tertiary: #8A959C;
+      --border: rgba(0,0,0,0.10); --border-md: rgba(0,0,0,0.20);
+      --radius-md: 8px; --radius-lg: 12px;
+      --green: #2D6A11; --green-light: #EAF3DE; --green-text: #1B4A09;
+      --amber: #B07A10; --amber-light: #FDF3DC; --amber-text: #7A5408;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-secondary: #252523;
+        --text-primary: #f0ede6; --text-secondary: #A8B2B8; --text-tertiary: #7A858C;
+        --border: rgba(255,255,255,0.10); --border-md: rgba(255,255,255,0.20);
+        --scarlet-light: #3D000F; --scarlet-text: #FF9AAF;
+        --green-light: #122608; --green-text: #A8D880;
+        --amber-light: #2E1F04; --amber-text: #F0C060;
+      }
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; padding: 0; }
+    .container { max-width: 680px; margin: 0 auto; padding: 1.75rem 1.5rem 2.5rem; }
+    .page-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--scarlet-light); color: var(--scarlet-text); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; border: 0.5px solid rgba(204,0,51,0.2); }
+    h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+    .instr-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-left: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .instr-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .instr-card strong { color: var(--text-primary); font-weight: 500; }
+    .instr-card .note { font-size: 12px; color: var(--text-tertiary); margin-top: 8px; font-style: italic; }
+    .text-id-banner { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
+    .text-id-banner i { color: var(--scarlet); font-size: 16px; flex-shrink: 0; }
+    .text-id-banner p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .text-id-code { font-family: monospace; font-size: 13px; font-weight: 600; color: var(--scarlet); background: var(--scarlet-light); padding: 2px 8px; border-radius: 4px; border: 0.5px solid rgba(204,0,51,0.2); }
+    .phase-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+    .phase-row span:first-child { font-size: 13px; color: var(--text-secondary); }
+    .pill { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+    .pill-prep { background: var(--amber-light); color: var(--amber-text); }
+    .pill-record { background: var(--scarlet-light); color: var(--scarlet-text); }
+    .pill-done { background: var(--green-light); color: var(--green-text); }
+    .timer-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .timer-display { font-size: 42px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+    .timer-display.done { color: var(--green); }
+    .timer-display.overdue { color: var(--scarlet); }
+    .timer-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: transparent; color: var(--text-primary); cursor: pointer; transition: background 0.15s, transform 0.1s; font-family: inherit; }
+    button:hover { background: var(--bg-secondary); }
+    button:active { transform: scale(0.97); }
+    .btn-scarlet { background: var(--scarlet); color: #fff; border-color: var(--scarlet); }
+    .btn-scarlet:hover { background: var(--scarlet-dark); }
+    .progress-wrap { width: 100%; height: 5px; background: var(--bg-secondary); border-radius: 3px; margin-bottom: 1.25rem; overflow: hidden; }
+    .progress-bar { height: 5px; border-radius: 3px; background: var(--scarlet); transition: width 1s linear, background 0.4s; }
+    .divider { height: 0.5px; background: var(--border); margin: 1.25rem 0; }
+    .text-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; position: relative; min-height: 200px; }
+    .text-card-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 8px; }
+    .text-topic { font-size: 12px; color: var(--scarlet-text); background: var(--scarlet-light); display: inline-block; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; font-weight: 500; border: 0.5px solid rgba(204,0,51,0.15); }
+    .text-body { font-size: 15px; color: var(--text-primary); line-height: 1.85; }
+    .text-body.blurred { filter: blur(6px); user-select: none; pointer-events: none; }
+    .lock-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius-lg); }
+    .lock-overlay span { font-size: 14px; color: var(--text-secondary); font-weight: 500; }
+    .canvas-prompt { background: var(--scarlet); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: none; }
+    .canvas-prompt.visible { display: block; }
+    .canvas-prompt-title { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+    .canvas-prompt-text { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+    .canvas-prompt-code { font-family: monospace; font-weight: 600; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; }
+    .bottom-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .ru-footer { padding-top: 1rem; border-top: 0.5px solid var(--border); text-align: center; font-size: 12px; color: var(--text-tertiary); }
+    .ru-footer span { color: var(--scarlet); font-weight: 700; font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+<main class="container" role="main">
+  <div style="margin-bottom:1.5rem; margin-top:0.5rem;">
+    <div class="page-badge">Module 7 · Pregnancy & Pediatrics</div>
+    <h1>Sight Translation Exercise</h1>
+    <p class="subtitle">Read the clinical text in English carefully, prepare your oral sight translation during the timer, then record using the Canvas Media Recorder below.</p>
+  </div>
+
+  <div class="instr-card">
+    <p>Perform a <strong>sight translation</strong> of the text below. You have <strong>5 minutes</strong> to read and analyze the text, note any unfamiliar vocabulary, and prepare your oral delivery. When you are ready, scroll down to the <strong>Canvas Media Recorder</strong> and record your oral sight translation into Spanish. Note your text code before submitting.</p>
+    <p class="note">In a clinical setting, precision matters. Use your preparation time well.</p>
+  </div>
+
+  <div class="text-id-banner">
+    <i class="ti ti-id" aria-hidden="true"></i>
+    <p>Your assigned text: <strong id="text-id-display">—</strong> &nbsp;·&nbsp; Include this code in your Canvas submission comments so your instructor can follow along while grading.</p>
+  </div>
+
+  <div class="phase-row">
+    <span>Phase:</span>
+    <span class="pill pill-prep" id="phase-label">Preparation</span>
+  </div>
+
+  <div class="timer-row">
+    <div>
+      <div class="timer-display" id="timer-display">5:00</div>
+      <div class="timer-label">Preparation time</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-scarlet" id="btn-start" onclick="startTimer()">
+        <i class="ti ti-player-play" aria-hidden="true"></i> Start timer
+      </button>
+      <button id="btn-reset-timer" onclick="softReset()" style="display:none;">
+        <i class="ti ti-refresh" aria-hidden="true"></i> Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progress-bar" style="width:100%;"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="text-card">
+    <div class="text-card-label">Clinical text · English — Translate orally into Spanish</div>
+    <div class="text-topic" id="text-topic"></div>
+    <div class="text-body blurred" id="text-body"></div>
+    <div class="lock-overlay" id="lock-overlay">
+      <i class="ti ti-lock" style="font-size:26px; color: var(--text-tertiary);" aria-hidden="true"></i>
+      <span>Start the timer to reveal your text</span>
+    </div>
+  </div>
+
+  <div class="canvas-prompt" id="canvas-prompt">
+    <div class="canvas-prompt-title">⬇ Scroll down to record with Canvas Media Recorder</div>
+    <div class="canvas-prompt-text">Your preparation time has ended. Your text code is <span class="canvas-prompt-code" id="canvas-code"></span>. Scroll down, press Record in the Canvas Media Recorder, scroll back up to your text, and deliver your oral sight translation into Spanish. Include your text code in your submission comments.</div>
+  </div>
+
+  <div class="bottom-actions">
+    <button id="btn-new" onclick="loadNewText()">
+      <i class="ti ti-refresh" aria-hidden="true"></i> New text
+    </button>
+  </div>
+
+  <div class="ru-footer"><span>R</span> Rutgers University · Medical Sight Translation Course · Module 7</div>
+</main>
+
+<script>
+const TEXTS = [
+  {
+    id: "PP-01",
+    topic: "Labor and delivery",
+    text: "The patient is a 28-year-old woman who is 39 weeks pregnant and has arrived at the hospital because her water broke about two hours ago. She reports that her contractions started shortly after and are now coming every five minutes. During the examination, the doctor confirms that her cervix is dilated four centimeters. The fetal monitor shows that the baby's heart rate is normal and stable. The patient asks about pain management options. The doctor explains that she can receive an epidural medication for pain relief if she chooses. The patient also asks about the possibility of a C-section. The doctor explains that at this point a vaginal delivery is expected, but that the situation will continue to be monitored closely. The patient is admitted to the labor and delivery unit and the nursing team begins preparing for the birth."
+  },
+  {
+    id: "PP-02",
+    topic: "Prenatal complications",
+    text: "The patient is a 32-year-old woman who is 34 weeks pregnant and has come to the clinic for a routine prenatal visit. Her blood pressure reading today is elevated, which is a concern. The doctor explains that high blood pressure during pregnancy can be a sign of preeclampsia, a serious condition that requires careful monitoring. The patient also reports some vaginal bleeding over the past two days, which the doctor takes very seriously. An ultrasound is ordered to check the position of the placenta. The results show that she has placenta previa, meaning the placenta is covering the opening of the cervix. The doctor explains that because of this, a vaginal delivery would not be safe, and a C-section will be planned. The patient is advised to rest, avoid strenuous activity, and return immediately if the bleeding increases."
+  },
+  {
+    id: "PP-03",
+    topic: "Newborn visit — two months",
+    text: "The mother has brought her two-month-old baby for a routine well-baby visit. The doctor asks several developmental questions. Does the baby turn his head when he hears his mother's voice? Does he raise his head briefly when placed on his tummy? Does he cry when he needs something? Does he sometimes smile? Can he sometimes soothe himself, for example by sucking on his hand? Does he react to loud noises? The mother answers yes to most of these questions. The doctor explains that these are all important developmental milestones for a two-month-old. The baby's weight and height are measured and both are within the normal range for his age. The doctor also discusses the importance of placing the baby on his back to sleep and of bringing him back for his four-month visit."
+  },
+  {
+    id: "PP-04",
+    topic: "Newborn visit — four months",
+    text: "The patient is a four-month-old girl who has been brought to the clinic by her parents for her well-baby checkup. The doctor asks the parents about her development. Does she smile spontaneously, especially when she sees people? Does she respond when you speak or sing to her? Does she try to reach for objects with her hand? Does she enjoy simple games such as peek-a-boo? Does she follow objects with her vision? Can she keep her head up without support? Can she flip over when she is placed face down? Can she shake a rattle? The parents report that she does most of these things. The doctor reviews her growth and confirms she is meeting her developmental milestones. Her vaccinations are also updated during this visit."
+  },
+  {
+    id: "PP-05",
+    topic: "Breastfeeding and infant feeding",
+    text: "During the postpartum visit, the doctor asks the new mother about her feeding plans. The mother says she plans to breastfeed but is having some difficulty. The doctor explains that breastfeeding is natural but that it sometimes takes time to learn to do it effectively and comfortably. The clinic has a lactation specialist who helps mothers learn how to breastfeed. The doctor also mentions that it is important for the mother to know about pumping milk, especially if she plans to return to work or needs to be away from the baby. She can rent a breast pump from the hospital or purchase one on her own. The lactation specialist can show her how to use it. The doctor encourages the mother to ask for help and reminds her that many mothers face challenges in the beginning but are able to breastfeed successfully with the right support."
+  },
+  {
+    id: "PP-06",
+    topic: "Infant colic",
+    text: "The parents have brought their six-week-old baby to the clinic because he has been crying excessively for the past two weeks. The doctor explains that infant colic is when a baby cries excessively, and that many parents believe the baby is uncomfortable due to abdominal pain or digestive problems. However, colic does not cause any medical problems for the baby. Crying in babies is normal, and some babies cry more than others. If the baby is crying excessively, the parents can try to console the baby, rock the baby, or burp the baby after feedings. They should also check if the baby has a fever and call their doctor if they are concerned. The doctor acknowledges that colic can be a very frustrating problem for parents. The doctor also reminds them that if they ever feel they cannot take care of the baby or that they might hurt the baby, they should call their doctor or a help line immediately."
+  },
+  {
+    id: "PP-07",
+    topic: "Child safety",
+    text: "During a routine well-child visit, the pediatrician discusses home safety with the parents. The doctor asks whether they have a car seat for their child. The car seat should be in the back seat of the car and should be facing backward. The parents should ask their pediatrician when it is safe to turn the car seat to face forward. The doctor also advises that water for the bath should be warm but not too hot. When the child rides a tricycle, bicycle, scooter, or skates, the child should always wear a helmet. If the family has pets at home, the pets should be vaccinated and trained to be around children. Parents should teach their children to treat pets with respect to avoid accidents such as bites. Finally, the doctor asks whether the building where the family lives was built before 1978, because older buildings and homes may contain lead paint, which can be harmful to young children."
+  },
+  {
+    id: "PP-08",
+    topic: "Breech position and delivery planning",
+    text: "The patient is a 37-year-old woman who is 36 weeks pregnant and has come for her prenatal appointment. The ultrasound performed today shows that the baby is in a breech position, meaning the baby's feet are pointing downward instead of the head. The doctor explains that this position makes a vaginal delivery more difficult and potentially unsafe. The doctor discusses two options with the patient. The first is a procedure called external cephalic version, where the doctor attempts to turn the baby from the outside by applying gentle pressure on the abdomen. The second option is to plan a C-section. The doctor explains the risks and benefits of each option. The patient is given time to ask questions and think about her decision. The doctor reminds her that the baby's position can sometimes change on its own before delivery, and that they will check again at the next appointment."
+  },
+  {
+    id: "PP-09",
+    topic: "Pediatric questions — first visit",
+    text: "The pediatrician begins the visit by speaking directly to the young child. She asks: why did your mom bring you to the doctor today? How do you feel? Show me where it hurts. The child points to his stomach. The doctor then turns to the mother and says: now I am going to ask you some questions. Is that okay? Why did you bring your child to the clinic today? The mother explains that her son has had a stomachache for two days and has not been eating well. The doctor examines the child and asks about any fever, vomiting, or changes in bowel movements. The mother reports that the child had a low fever yesterday and that he has not had a bowel movement in three days. The doctor explains that the child may be constipated and discusses dietary changes and fluids that can help. If the symptoms do not improve in the next two days, the mother should call the clinic."
+  },
+  {
+    id: "PP-10",
+    topic: "Premature delivery",
+    text: "The patient is a 25-year-old woman who is 32 weeks pregnant and has been admitted to the hospital because she is showing signs of early labor. The doctor explains that a baby born before 37 weeks is considered premature. Premature babies may need extra care after birth and may need to spend time in the neonatal intensive care unit, also known as the NICU. The doctor explains that the medical team will try to slow down the labor if possible to give the baby more time to develop. The patient asks what to expect if the baby is born early. The doctor explains that premature babies may have difficulty breathing on their own and may need oxygen support. They may also have difficulty maintaining their body temperature and may need to be kept in a special warming unit. The doctor reassures the patient that the neonatal team is experienced and will provide the best possible care for the baby."
+  }
+];
+
+let timerInterval = null, secondsLeft = 300, timerStarted = false, currentIndex = -1, currentTextId = "";
+
+function fmt(s) { const m=Math.floor(Math.abs(s)/60),sec=Math.abs(s)%60; return (s<0?"-":"")+m+":"+(sec<10?"0":"")+sec; }
+
+function setPhase(p) {
+  const el = document.getElementById("phase-label");
+  if(p==="prep"){ el.textContent="Preparation"; el.className="pill pill-prep"; }
+  else if(p==="record"){ el.textContent="Record now"; el.className="pill pill-record"; }
+  else{ el.textContent="Completed"; el.className="pill pill-done"; }
+}
+
+function revealText() {
+  document.getElementById("text-body").classList.remove("blurred");
+  document.getElementById("lock-overlay").style.display="none";
+}
+
+function startTimer() {
+  if(timerInterval) return;
+  timerStarted = true;
+  document.getElementById("btn-start").style.display="none";
+  document.getElementById("btn-reset-timer").style.display="inline-flex";
+  document.getElementById("btn-new").style.display="none";
+  setPhase("prep");
+  revealText();
+
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const d = document.getElementById("timer-display");
+    d.textContent = fmt(secondsLeft);
+    const pct = Math.max(0, secondsLeft/300*100);
+    const bar = document.getElementById("progress-bar");
+    bar.style.width = pct + "%";
+    if(secondsLeft <= 60 && secondsLeft > 0) bar.style.background = "#B07A10";
+    if(secondsLeft <= 0) {
+      bar.style.width = "0%";
+      d.className = "timer-display " + (secondsLeft < -10 ? "overdue" : "done");
+      if(secondsLeft === 0) {
+        setPhase("record");
+        document.getElementById("canvas-code").textContent = currentTextId;
+        document.getElementById("canvas-prompt").classList.add("visible");
+        clearInterval(timerInterval);
+      }
+    }
+  }, 1000);
+}
+
+function softReset() {
+  clearInterval(timerInterval); timerInterval=null; secondsLeft=300; timerStarted=false;
+  document.getElementById("timer-display").textContent="5:00";
+  document.getElementById("timer-display").className="timer-display";
+  document.getElementById("progress-bar").style.width="100%";
+  document.getElementById("progress-bar").style.background="var(--scarlet)";
+  document.getElementById("btn-start").style.display="inline-flex";
+  document.getElementById("btn-reset-timer").style.display="none";
+  document.getElementById("canvas-prompt").classList.remove("visible");
+  setPhase("prep");
+  document.getElementById("text-body").classList.add("blurred");
+  document.getElementById("lock-overlay").style.display="flex";
+  document.getElementById("btn-new").style.display="inline-flex";
+}
+
+function loadNewText() {
+  let n;
+  do { n = Math.floor(Math.random() * TEXTS.length); } while(n === currentIndex && TEXTS.length > 1);
+  currentIndex = n;
+  const e = TEXTS[n];
+  currentTextId = e.id;
+  document.getElementById("text-topic").textContent = e.topic;
+  document.getElementById("text-body").textContent = e.text;
+  document.getElementById("text-id-display").innerHTML = `<span class="text-id-code">${e.id} — ${e.topic}</span>`;
+  softReset();
+}
+
+loadNewText();
+</script>
+</body>
+</html>
