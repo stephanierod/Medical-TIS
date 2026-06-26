@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Education Monologue · Module 7 · Rutgers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --scarlet: #CC0033; --scarlet-dark: #990025; --scarlet-light: #FAEAED; --scarlet-text: #7A001E;
+      --bg: #ffffff; --bg-secondary: #F7F7F6;
+      --text-primary: #1a1a18; --text-secondary: #5F6A72; --text-tertiary: #8A959C;
+      --border: rgba(0,0,0,0.10); --border-md: rgba(0,0,0,0.20);
+      --radius-md: 8px; --radius-lg: 12px;
+      --green: #2D6A11; --green-light: #EAF3DE; --green-text: #1B4A09;
+      --amber: #B07A10; --amber-light: #FDF3DC; --amber-text: #7A5408;
+      --blue: #185FA5; --blue-light: #E6F1FB; --blue-text: #0C447C;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-secondary: #252523;
+        --text-primary: #f0ede6; --text-secondary: #A8B2B8; --text-tertiary: #7A858C;
+        --border: rgba(255,255,255,0.10); --border-md: rgba(255,255,255,0.20);
+        --scarlet-light: #3D000F; --scarlet-text: #FF9AAF;
+        --green-light: #122608; --green-text: #A8D880;
+        --amber-light: #2E1F04; --amber-text: #F0C060;
+        --blue-light: #042C53; --blue-text: #B5D4F4;
+      }
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; padding: 0; }
+    .container { max-width: 680px; margin: 0 auto; padding: 1.75rem 1.5rem 2.5rem; }
+    .page-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--scarlet-light); color: var(--scarlet-text); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; border: 0.5px solid rgba(204,0,51,0.2); }
+    h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+    .instr-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-left: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .instr-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .instr-card strong { color: var(--text-primary); font-weight: 500; }
+
+    .prompt-card { background: var(--bg); border: 0.5px solid var(--border); border-top: 4px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .prompt-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+    .prompt-scenario { font-size: 16px; color: var(--text-primary); line-height: 1.6; font-weight: 500; margin-bottom: 1rem; }
+    .prompt-task { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    .checklist { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .checklist-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 12px; }
+    .checklist-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .checklist-item i { color: var(--scarlet); font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+
+    .vocab-card { background: var(--blue-light); border: 0.5px solid rgba(24,95,165,0.25); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .vocab-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue-text); margin-bottom: 10px; }
+    .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .vocab-item { font-size: 13px; padding: 5px 8px; background: var(--bg); border-radius: var(--radius-md); display: flex; justify-content: space-between; gap: 8px; }
+    .vocab-item span:first-child { color: var(--text-secondary); }
+    .vocab-item span:last-child { color: var(--text-primary); font-weight: 500; }
+
+    .phase-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; }
+    .phase-row span:first-child { font-size: 13px; color: var(--text-secondary); }
+    .pill { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+    .pill-prep { background: var(--amber-light); color: var(--amber-text); }
+    .pill-record { background: var(--scarlet-light); color: var(--scarlet-text); }
+    .pill-done { background: var(--green-light); color: var(--green-text); }
+
+    .timer-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .timer-display { font-size: 42px; font-weight: 500; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1; }
+    .timer-display.done { color: var(--green); }
+    .timer-display.overdue { color: var(--scarlet); }
+    .timer-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: transparent; color: var(--text-primary); cursor: pointer; transition: background 0.15s, transform 0.1s; font-family: inherit; }
+    button:hover { background: var(--bg-secondary); }
+    button:active { transform: scale(0.97); }
+    .btn-scarlet { background: var(--scarlet); color: #fff; border-color: var(--scarlet); }
+    .btn-scarlet:hover { background: var(--scarlet-dark); }
+
+    .progress-wrap { width: 100%; height: 5px; background: var(--bg-secondary); border-radius: 3px; margin-bottom: 1.25rem; overflow: hidden; }
+    .progress-bar { height: 5px; border-radius: 3px; background: var(--scarlet); transition: width 1s linear, background 0.4s; }
+
+    .canvas-prompt { background: var(--scarlet); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: none; }
+    .canvas-prompt.visible { display: block; }
+    .canvas-prompt-title { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+    .canvas-prompt-text { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+    .ru-footer { padding-top: 1rem; border-top: 0.5px solid var(--border); text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 1.5rem; }
+    .ru-footer span { color: var(--scarlet); font-weight: 700; font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+<main class="container" role="main">
+  <div style="margin-bottom:1.5rem; margin-top:0.5rem;">
+    <div class="page-badge">Module 7 · CCLA Practice · Patient Education</div>
+    <h1>Patient Education Monologue</h1>
+    <p class="subtitle">Deliver a patient education monologue entirely in Spanish, without an interpreter, as you would in a real clinical encounter.</p>
+  </div>
+
+  <div class="instr-card">
+    <p>This activity prepares you for the <strong>CCLA</strong>, which assesses your ability to communicate directly with patients in Spanish without an interpreter. You have <strong>2 minutes</strong> to prepare and deliver your monologue. Read the scenario, prepare your explanation, then record yourself speaking directly to the patient in clear, patient-friendly Spanish. Start your Canvas Media Recorder before beginning.</p>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-label">Your scenario</div>
+    <div class="prompt-scenario">Una paciente de 30 años, embarazada de 38 semanas, llega a su primera cita para hablar sobre el parto. Está nerviosa y tiene muchas preguntas sobre qué esperar durante el trabajo de parto y el alumbramiento.</div>
+    <div class="prompt-task"><strong>Su tarea:</strong> Explíquele a la paciente, en español y sin intérprete, qué puede esperar durante el trabajo de parto. Incluya información sobre las contracciones, la dilatación del cuello del útero, el monitoreo fetal, y las opciones para el manejo del dolor, incluyendo el medicamento epidural. Hable directamente con la paciente de manera clara, tranquilizadora y respetuosa.</div>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-label">Your monologue should include</div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>A warm greeting and acknowledgment of the patient's concerns</span></div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>An explanation of what contractions are and how they progress</span></div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>A description of cervical dilation in patient-friendly terms</span></div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>An explanation of fetal monitoring during labor</span></div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>Pain management options, including the epidural</span></div>
+    <div class="checklist-item"><i class="ti ti-point" aria-hidden="true"></i><span>A reassuring closing that invites the patient to ask questions</span></div>
+  </div>
+
+  <div class="vocab-card">
+    <div class="vocab-label">Vocabulario de apoyo · Support vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><span>contractions</span><span>las contracciones</span></div>
+      <div class="vocab-item"><span>cervical dilation</span><span>la dilatación del cuello</span></div>
+      <div class="vocab-item"><span>fetal monitor</span><span>el monitoreo fetal</span></div>
+      <div class="vocab-item"><span>to deliver</span><span>dar a luz / alumbrar</span></div>
+      <div class="vocab-item"><span>labor pains</span><span>los dolores del parto</span></div>
+      <div class="vocab-item"><span>epidural for pain</span><span>la epidural para el dolor</span></div>
+      <div class="vocab-item"><span>vaginal delivery</span><span>el parto vaginal</span></div>
+      <div class="vocab-item"><span>C-section</span><span>la cesárea</span></div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <span>Phase:</span>
+    <span class="pill pill-prep" id="phase-label">Prepare and deliver</span>
+  </div>
+
+  <div class="timer-row">
+    <div>
+      <div class="timer-display" id="timer-display">2:00</div>
+      <div class="timer-label">Total time to prepare and record</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-scarlet" id="btn-start" onclick="startTimer()">
+        <i class="ti ti-player-play" aria-hidden="true"></i> Start timer
+      </button>
+      <button id="btn-reset" onclick="resetTimer()" style="display:none;">
+        <i class="ti ti-refresh" aria-hidden="true"></i> Reset
+      </button>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progress-bar" style="width:100%;"></div>
+  </div>
+
+  <div class="canvas-prompt" id="canvas-prompt">
+    <div class="canvas-prompt-title">✓ Time complete</div>
+    <div class="canvas-prompt-text">Your 2 minutes are up. If you have not finished, stop your Canvas recording where you are. Make sure your recording is submitted in Canvas. Include your name and module number in your submission comments.</div>
+  </div>
+
+  <div class="ru-footer"><span>R</span> Rutgers University · Medical Sight Translation Course · Module 7</div>
+</main>
+
+<script>
+let timerInterval = null, secondsLeft = 120;
+
+function fmt(s) { const m=Math.floor(Math.abs(s)/60),sec=Math.abs(s)%60; return (s<0?"-":"")+m+":"+(sec<10?"0":"")+sec; }
+
+function startTimer() {
+  if(timerInterval) return;
+  document.getElementById("btn-start").style.display="none";
+  document.getElementById("btn-reset").style.display="inline-flex";
+  document.getElementById("phase-label").textContent="Recording";
+  document.getElementById("phase-label").className="pill pill-record";
+
+  timerInterval = setInterval(()=>{
+    secondsLeft--;
+    const d = document.getElementById("timer-display");
+    d.textContent = fmt(secondsLeft);
+    const pct = Math.max(0, secondsLeft/120*100);
+    const bar = document.getElementById("progress-bar");
+    bar.style.width = pct + "%";
+    if(secondsLeft <= 30 && secondsLeft > 0) bar.style.background = "#B07A10";
+    if(secondsLeft <= 0) {
+      bar.style.width = "0%";
+      d.className = "timer-display done";
+      document.getElementById("phase-label").textContent="Completed";
+      document.getElementById("phase-label").className="pill pill-done";
+      document.getElementById("canvas-prompt").classList.add("visible");
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timerInterval); timerInterval=null; secondsLeft=120;
+  document.getElementById("timer-display").textContent="2:00";
+  document.getElementById("timer-display").className="timer-display";
+  document.getElementById("progress-bar").style.width="100%";
+  document.getElementById("progress-bar").style.background="var(--scarlet)";
+  document.getElementById("btn-start").style.display="inline-flex";
+  document.getElementById("btn-reset").style.display="none";
+  document.getElementById("phase-label").textContent="Prepare and deliver";
+  document.getElementById("phase-label").className="pill pill-prep";
+  document.getElementById("canvas-prompt").classList.remove("visible");
+}
+</script>
+</body>
+</html>
