@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prescription Instructions · Module 7 · Rutgers</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --scarlet: #CC0033; --scarlet-dark: #990025; --scarlet-light: #FAEAED; --scarlet-text: #7A001E;
+      --bg: #ffffff; --bg-secondary: #F7F7F6;
+      --text-primary: #1a1a18; --text-secondary: #5F6A72; --text-tertiary: #8A959C;
+      --border: rgba(0,0,0,0.10); --border-md: rgba(0,0,0,0.20);
+      --radius-md: 8px; --radius-lg: 12px;
+      --green: #2D6A11; --green-light: #EAF3DE; --green-text: #1B4A09;
+      --amber: #B07A10; --amber-light: #FDF3DC; --amber-text: #7A5408;
+      --blue: #185FA5; --blue-light: #E6F1FB; --blue-text: #0C447C;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18; --bg-secondary: #252523;
+        --text-primary: #f0ede6; --text-secondary: #A8B2B8; --text-tertiary: #7A858C;
+        --border: rgba(255,255,255,0.10); --border-md: rgba(255,255,255,0.20);
+        --scarlet-light: #3D000F; --scarlet-text: #FF9AAF;
+        --green-light: #122608; --green-text: #A8D880;
+        --amber-light: #2E1F04; --amber-text: #F0C060;
+        --blue-light: #042C53; --blue-text: #B5D4F4;
+      }
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; padding: 0; }
+    .container { max-width: 680px; margin: 0 auto; padding: 1.75rem 1.5rem 2.5rem; }
+    .page-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--scarlet-light); color: var(--scarlet-text); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; border: 0.5px solid rgba(204,0,51,0.2); }
+    h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+    .instr-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-left: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .instr-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .instr-card strong { color: var(--text-primary); font-weight: 500; }
+
+    .progress-section { margin-bottom: 1.25rem; }
+    .progress-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .progress-wrap { width: 100%; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 6px; border-radius: 3px; background: var(--scarlet); transition: width 0.3s; }
+
+    /* Card with one prescription */
+    .rx-card { background: var(--bg); border: 0.5px solid var(--border); border-top: 4px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1.75rem; margin-bottom: 1.25rem; min-height: 220px; display: flex; flex-direction: column; }
+    .rx-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .rx-counter { font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); }
+    .rx-name { font-size: 12px; color: var(--scarlet-text); background: var(--scarlet-light); padding: 3px 10px; border-radius: 20px; font-weight: 500; border: 0.5px solid rgba(204,0,51,0.15); }
+    .rx-text { font-size: 19px; color: var(--text-primary); line-height: 1.6; flex: 1; display: flex; align-items: center; transition: opacity 0.3s; }
+    .rx-text.fading { opacity: 0; }
+
+    .attempt-note { background: var(--amber-light); border: 0.5px solid #D4A020; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-top: 1.25rem; font-size: 13px; color: var(--amber-text); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
+    .attempt-note strong { font-weight: 600; }
+
+    /* Nav */
+    .nav-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .nav-left { display: flex; gap: 8px; }
+    button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: var(--radius-md); border: 0.5px solid var(--border-md); background: transparent; color: var(--text-primary); cursor: pointer; transition: background 0.15s, transform 0.1s; font-family: inherit; }
+    button:hover { background: var(--bg-secondary); }
+    button:active { transform: scale(0.97); }
+    button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+    .btn-scarlet { background: var(--scarlet); color: #fff; border-color: var(--scarlet); }
+    .btn-scarlet:hover { background: var(--scarlet-dark); }
+
+    /* Speaker for medication */
+    .listen-row { display: flex; align-items: center; gap: 10px; margin-top: 1rem; }
+    .med-speaker { width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; padding: 0; transition: background 0.15s, transform 0.1s; }
+    .med-speaker:hover { background: var(--blue-text); }
+    .med-speaker:active { transform: scale(0.92); }
+    .med-speaker.playing { animation: pulse-spk 0.8s infinite; }
+    @keyframes pulse-spk { 0%,100%{opacity:1;} 50%{opacity:0.55;} }
+    .listen-label { font-size: 13px; color: var(--text-secondary); }
+    .listen-phon { font-size: 12px; color: var(--text-tertiary); font-style: italic; }
+
+    .vocab-card { background: var(--blue-light); border: 0.5px solid rgba(24,95,165,0.25); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .vocab-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue-text); margin-bottom: 10px; }
+    .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .vocab-item { font-size: 13px; padding: 5px 8px; background: var(--bg); border-radius: var(--radius-md); display: flex; justify-content: space-between; gap: 8px; }
+    .vocab-item span:first-child { color: var(--text-secondary); }
+    .vocab-item span:last-child { color: var(--text-primary); font-weight: 500; }
+
+    .complete-card { background: var(--green-light); border: 0.5px solid #6AAD2A; border-radius: var(--radius-lg); padding: 2rem; text-align: center; display: none; margin-bottom: 1.25rem; }
+    .complete-card.visible { display: block; }
+    .complete-title { font-size: 18px; font-weight: 500; color: var(--green-text); margin-bottom: 8px; }
+    .complete-msg { font-size: 14px; color: var(--green-text); line-height: 1.6; }
+
+    .ru-footer { padding-top: 1rem; border-top: 0.5px solid var(--border); text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 1.5rem; }
+    .ru-footer span { color: var(--scarlet); font-weight: 700; font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+<main class="container" role="main">
+  <div style="margin-bottom:1.5rem; margin-top:0.5rem;">
+    <div class="page-badge">Module 7 · Prescription Instructions</div>
+    <h1>Patient Instructions for Medication Adherence</h1>
+    <p class="subtitle">Deliver each prescription instruction to the patient in clear, patient-friendly Spanish.</p>
+  </div>
+
+  <div class="instr-card">
+    <p>Read each English prescription, then record yourself delivering the instructions out loud in Spanish using the Canvas Media Recorder, as you would to a patient at the pharmacy or bedside. When you are satisfied, press <strong>Next</strong> to move to the following prescription. <strong>Start your Canvas Media Recorder before you begin.</strong></p>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-label">
+      <span id="progress-text">Prescription 1 of 6</span>
+      <span id="progress-pct">17%</span>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:17%;"></div></div>
+  </div>
+
+  <div class="rx-card" id="rx-card">
+    <div class="rx-header">
+      <div class="rx-counter" id="rx-counter">Prescription 1 of 6</div>
+      <div class="rx-name" id="rx-name"></div>
+    </div>
+    <div class="rx-text" id="rx-text"></div>
+    <div class="listen-row" id="listen-row" style="display:none;">
+      <button class="med-speaker" id="med-speaker" aria-label="Play medication name in Spanish">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      </button>
+      <div>
+        <div class="listen-label" id="listen-label"></div>
+        <div class="listen-phon" id="listen-phon"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <div class="nav-left">
+      <button id="btn-prev" onclick="prevRx()" disabled>← Previous</button>
+    </div>
+    <button class="btn-scarlet" id="btn-next" onclick="nextRx()">Next →</button>
+  </div>
+
+  <div class="complete-card" id="complete-card">
+    <div class="complete-title">✓ All prescriptions completed</div>
+    <div class="complete-msg">You have worked through all six prescriptions. Make sure your Canvas recording is submitted. Include your name and module number in your submission comments.</div>
+  </div>
+
+  <div class="vocab-card">
+    <div class="vocab-label">Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><span>take (a medicine)</span><span>tomar / tomarse</span></div>
+      <div class="vocab-item"><span>tablet / pill</span><span>la pastilla</span></div>
+      <div class="vocab-item"><span>capsule</span><span>la cápsula</span></div>
+      <div class="vocab-item"><span>tablespoonful</span><span>una cucharada</span></div>
+      <div class="vocab-item"><span>by mouth</span><span>por vía oral</span></div>
+      <div class="vocab-item"><span>every day without fail</span><span>todos los días sin falta</span></div>
+      <div class="vocab-item"><span>as needed</span><span>según sea necesario</span></div>
+      <div class="vocab-item"><span>for pain</span><span>para el dolor</span></div>
+      <div class="vocab-item"><span>for congestion</span><span>para la congestión</span></div>
+      <div class="vocab-item"><span>do not exceed</span><span>no exceda</span></div>
+      <div class="vocab-item"><span>twice daily</span><span>dos veces al día</span></div>
+      <div class="vocab-item"><span>four times a day</span><span>cuatro veces al día</span></div>
+    </div>
+  </div>
+
+  <div class="ru-footer"><span>R</span> Rutgers University · Medical Sight Translation Course · Module 7</div>
+</main>
+
+<script>
+const RX = [
+  { name: "General instruction", text: "Take the medicine every day without fail.", med: null },
+  { name: "Omeprazole", text: "Omeprazole, take 1 capsule at 8:00 a.m.", med: "Omeprazol", phon: "oh-meh-prah-SOL" },
+  { name: "Guaifenesin", text: "Guaifenesin, take 1 tablespoonful 4 times a day for congestion.", med: "Guaifenesina", phon: "gwai-feh-neh-SEE-nah" },
+  { name: "Donepezil", text: "Donepezil, take 10 mg by mouth once a day in the morning.", med: "Donepezilo", phon: "doh-neh-peh-SEE-loh" },
+  { name: "Acetaminophen + Hydrocodone", text: "Acetaminophen 650 mg every 4 hours as needed for pain, not to exceed 4 g of acetaminophen in a 24-hour period. Hydrocodone 5 mg, take one to two tablets every 6 hours as needed for breakthrough pain.", med: "Acetaminofén e Hidrocodona", phon: "ah-seh-tah-mee-noh-FEN / ee-droh-koh-DOH-nah" },
+  { name: "Doxycycline + Cephalexin", text: "Doxycycline 100 mg twice daily for ten days, and Cephalexin 500 mg four times daily for ten days.", med: "Doxiciclina y Cefalexina", phon: "dohk-see-see-KLEE-nah / seh-fah-lek-SEE-nah" }
+];
+
+let current = 0;
+
+// Voices
+let voices = [];
+function loadVoices() { voices = window.speechSynthesis.getVoices(); }
+loadVoices();
+if (window.speechSynthesis.onvoiceschanged !== undefined) window.speechSynthesis.onvoiceschanged = loadVoices;
+function getSpanishVoice() {
+  const pref = ['es-US','es-MX','es-ES','es'];
+  for (const lang of pref) { const v = voices.find(v => v.lang.startsWith(lang)); if (v) return v; }
+  return voices.find(v => v.lang.startsWith('es')) || null;
+}
+
+function render() {
+  const rx = RX[current];
+  const textEl = document.getElementById("rx-text");
+  textEl.classList.add("fading");
+  setTimeout(() => {
+    textEl.textContent = rx.text;
+    textEl.classList.remove("fading");
+  }, 200);
+
+  document.getElementById("rx-counter").textContent = `Prescription ${current + 1} of ${RX.length}`;
+  document.getElementById("rx-name").textContent = rx.name;
+
+  const listenRow = document.getElementById("listen-row");
+  if (rx.med) {
+    listenRow.style.display = "flex";
+    document.getElementById("listen-label").textContent = "Hear: " + rx.med;
+    document.getElementById("listen-phon").textContent = rx.phon;
+    const spk = document.getElementById("med-speaker");
+    spk.onclick = () => {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(rx.med);
+      utt.lang = "es-US";
+      const v = getSpanishVoice(); if (v) utt.voice = v;
+      utt.rate = 0.8;
+      spk.classList.add("playing");
+      utt.onend = () => spk.classList.remove("playing");
+      window.speechSynthesis.speak(utt);
+    };
+  } else {
+    listenRow.style.display = "none";
+  }
+
+  const pct = Math.round(((current + 1) / RX.length) * 100);
+  document.getElementById("progress-bar").style.width = pct + "%";
+  document.getElementById("progress-pct").textContent = pct + "%";
+  document.getElementById("progress-text").textContent = `Prescription ${current + 1} of ${RX.length}`;
+
+  document.getElementById("btn-prev").disabled = current === 0;
+  document.getElementById("btn-next").textContent = current === RX.length - 1 ? "Finish ✓" : "Next →";
+}
+
+function nextRx() {
+  if (current < RX.length - 1) {
+    current++;
+    render();
+  } else {
+    document.getElementById("complete-card").classList.add("visible");
+    document.getElementById("complete-card").scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+}
+
+function prevRx() {
+  if (current > 0) {
+    current--;
+    document.getElementById("complete-card").classList.remove("visible");
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>
