@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mental Health Check-In: Anxiety · Rutgers</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --scarlet: #CC0033; --scarlet-dark: #990025; --scarlet-light: #FAEAED; --scarlet-text: #7A001E;
+      --bg: #ffffff; --bg-secondary: #F7F7F6;
+      --text-primary: #1a1a18; --text-secondary: #5F6A72; --text-tertiary: #8A959C;
+      --border: rgba(0,0,0,0.10); --border-md: rgba(0,0,0,0.20);
+      --green: #2D6A11; --green-light: #EAF3DE; --green-text: #1B4A09;
+      --amber: #B07A10; --amber-light: #FDF3DC; --amber-text: #7A5408;
+      --blue: #185FA5; --blue-light: #E6F1FB; --blue-text: #0C447C;
+      --radius-md: 8px; --radius-lg: 12px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 680px; margin: 0 auto; padding: 2rem 1.5rem; flex: 1; width: 100%; }
+    .page-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; background: var(--scarlet-light); color: var(--scarlet-text); padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; border: 0.5px solid rgba(204,0,51,0.2); }
+    h1 { font-size: 22px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
+    .instr-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-left: 3px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .instr-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+    .instr-card strong { color: var(--text-primary); font-weight: 500; }
+
+    .usted-note { background: var(--amber-light); border: 0.5px solid #D4A020; border-radius: var(--radius-lg); padding: 0.875rem 1.25rem; margin-bottom: 1.25rem; font-size: 13px; color: var(--amber-text); line-height: 1.6; }
+    .usted-note strong { font-weight: 600; }
+
+    .scenario-card { background: var(--bg); border: 0.5px solid var(--border); border-top: 4px solid var(--scarlet); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .scenario-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+    .scenario-text { font-size: 15px; color: var(--text-primary); line-height: 1.6; }
+    .scenario-text strong { font-weight: 600; }
+
+    .intro-card { background: var(--blue-light); border: 0.5px solid rgba(24,95,165,0.25); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .intro-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue-text); margin-bottom: 8px; }
+    .intro-text { font-size: 14px; color: var(--text-primary); line-height: 1.7; font-style: italic; }
+
+    .stem-card { background: var(--bg-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+    .stem-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px; }
+    .stem-text { font-size: 14px; color: var(--text-primary); line-height: 1.6; font-weight: 500; }
+    .stem-options { font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.6; }
+
+    .q-list { margin-bottom: 1.25rem; }
+    .q-item { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 8px; display: flex; gap: 14px; align-items: flex-start; transition: background 0.2s, border 0.2s; }
+    .q-item.done { background: var(--green-light); border-color: #6AAD2A; }
+    .q-num { width: 26px; height: 26px; border-radius: 50%; background: var(--scarlet); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .q-item.done .q-num { background: var(--green); }
+    .q-content { flex: 1; }
+    .q-text { font-size: 14px; color: var(--text-primary); line-height: 1.6; }
+    .q-check { flex-shrink: 0; align-self: center; }
+    .q-check input { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; }
+
+    .closing-card { background: var(--blue-light); border: 0.5px solid rgba(24,95,165,0.25); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .closing-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--blue-text); margin-bottom: 8px; }
+    .closing-text { font-size: 14px; color: var(--text-primary); line-height: 1.7; font-style: italic; }
+
+    .progress-section { margin-bottom: 1.25rem; }
+    .progress-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .progress-wrap { width: 100%; height: 6px; background: var(--bg-secondary); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 6px; border-radius: 3px; background: var(--scarlet); transition: width 0.3s; }
+
+    .canvas-prompt { background: var(--scarlet); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; display: none; }
+    .canvas-prompt.visible { display: block; }
+    .canvas-prompt-title { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+    .canvas-prompt-text { font-size: 13px; color: rgba(255,255,255,0.9); line-height: 1.6; }
+
+    .ru-footer { padding-top: 1rem; border-top: 0.5px solid var(--border); text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 1.5rem; }
+    .ru-footer span { color: var(--scarlet); font-weight: 700; font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+<main class="container" role="main">
+  <div style="margin-bottom:1.5rem;">
+    <div class="page-badge">Module · Mental Health · Anxiety Screening</div>
+    <h1>Mental Health Check-In: Anxiety</h1>
+    <p class="subtitle">Practice conducting an anxiety check-in with a Spanish-speaking patient using the GAD-7 questions in the formal usted register.</p>
+  </div>
+
+  <div class="instr-card">
+    <p>In this activity you will conduct a mental health check-in with a patient about anxiety, using the <strong>GAD-7 screening questions</strong>. Read the scenario, introduce yourself and the purpose of the check-in, then ask each of the seven questions out loud in Spanish. Speak warmly and professionally, as you would to a patient in a clinical setting. Record yourself using the Canvas Media Recorder.</p>
+  </div>
+
+  <div class="usted-note">
+    <strong>Register requirement:</strong> Use the formal <strong>usted</strong> throughout this check-in. Notice that the original screening tool uses the informal <em>tú</em> ("¿Te has sentido...?"). Your task is to deliver these same questions in the formal register a clinician would use with an adult patient they do not know well ("¿Se ha sentido...?").
+  </div>
+
+  <div class="scenario-card">
+    <div class="scenario-label">Your patient</div>
+    <div class="scenario-text">El señor Ramírez es un paciente de 47 años que llega a su cita de rutina. Menciona que últimamente se ha sentido muy nervioso y que le cuesta dormir. Su médico le ha pedido a usted que realice una breve evaluación de ansiedad para entender mejor cómo se ha sentido durante las últimas dos semanas.</div>
+  </div>
+
+  <div class="intro-card">
+    <div class="intro-label">Suggested introduction · Introducción sugerida</div>
+    <div class="intro-text">"Señor Ramírez, gracias por compartir cómo se ha sentido. Me gustaría hacerle algunas preguntas sobre cómo ha estado durante las últimas dos semanas. No hay respuestas correctas ni incorrectas. Puede responder con: ningún día, varios días, más de la mitad de los días, o casi todos los días. ¿Le parece bien si comenzamos?"</div>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-label">
+      <span id="progress-text">0 of 7 questions asked</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%;"></div></div>
+  </div>
+
+  <div class="q-list" id="q-list"></div>
+
+  <div class="closing-card">
+    <div class="closing-label">Suggested closing · Cierre sugerido</div>
+    <div class="closing-text">"Muchas gracias por sus respuestas, señor Ramírez. Esta información nos ayuda a entender mejor cómo se ha sentido. Voy a compartir sus respuestas con su médico, y juntos podremos hablar sobre los próximos pasos y las formas en que podemos apoyarlo. ¿Tiene alguna pregunta antes de continuar?"</div>
+  </div>
+
+  <div class="canvas-prompt" id="canvas-prompt">
+    <div class="canvas-prompt-title">✓ All questions completed</div>
+    <div class="canvas-prompt-text">You have asked all seven questions. Make sure your Canvas recording is submitted. Include your name and module number in your submission comments.</div>
+  </div>
+
+  <div class="ru-footer"><span>R</span> Rutgers University · Medical Sight Translation Course</div>
+</main>
+
+<script>
+const QUESTIONS = [
+  "¿Se ha sentido nervioso, ansioso o con los nervios de punta?",
+  "¿No ha sido capaz de parar o controlar su preocupación?",
+  "¿Se ha preocupado demasiado por motivos diferentes?",
+  "¿Ha tenido dificultad para relajarse?",
+  "¿Se ha sentido tan inquieto que no ha podido quedarse quieto?",
+  "¿Se ha molestado o irritado fácilmente?",
+  "¿Ha tenido miedo de que algo terrible fuera a pasar?"
+];
+
+let completed = 0;
+
+function buildList() {
+  const container = document.getElementById("q-list");
+  container.innerHTML = "";
+  QUESTIONS.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "q-item";
+    div.id = "q-" + i;
+    div.innerHTML = `
+      <div class="q-num">${i+1}</div>
+      <div class="q-content"><div class="q-text">${q}</div></div>
+      <div class="q-check"><input type="checkbox" id="check-${i}" onchange="toggleCheck(${i})" aria-label="Mark question ${i+1} asked"/></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleCheck(i) {
+  const checked = document.getElementById("check-" + i).checked;
+  document.getElementById("q-" + i).className = "q-item" + (checked ? " done" : "");
+  completed = QUESTIONS.filter((_, j) => document.getElementById("check-" + j).checked).length;
+  const pct = Math.round((completed / QUESTIONS.length) * 100);
+  document.getElementById("progress-bar").style.width = pct + "%";
+  document.getElementById("progress-pct").textContent = pct + "%";
+  document.getElementById("progress-text").textContent = `${completed} of ${QUESTIONS.length} questions asked`;
+  if(completed === QUESTIONS.length) document.getElementById("canvas-prompt").classList.add("visible");
+  else document.getElementById("canvas-prompt").classList.remove("visible");
+}
+
+buildList();
+</script>
+</body>
+</html>
